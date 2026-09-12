@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Clubs — Catalyst</title>
+
+    <link
+        rel="stylesheet"
+        href="assets/built/screen.css"
+    >
+
+    <style>
+
+        :root {
+            --black: #111111;
+            --white: #f7f7f2;
+            --muted: #707070;
+            --border: rgba(17, 17, 17, 0.18);
+            --accent: #d9ff00;
+        }
+
+        body {
+            margin: 0;
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .clubs-page {
+            min-height: 100vh;
+        }
+
+        /* NAVIGATION */
+
+        .clubs-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            border-bottom: 1px solid var(--border);
+
+            background: var(--white);
+        }
+
+        .clubs-nav-inner {
+            width: min(
+                1400px,
+                calc(100% - 48px)
+            );
+
+            min-height: 78px;
+
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 30px;
+        }
+
+        .clubs-logo {
+            color: var(--black);
+            text-decoration: none;
+
+            font-family:
+                "Arial Black",
+                Arial,
+                sans-serif;
+
+            font-size: 28px;
+            font-weight: 900;
+
+            letter-spacing: -1.5px;
+        }
+
+        .clubs-nav-links {
+            display: flex;
+            align-items: center;
+
+            gap: 28px;
+        }
+
+        .clubs-nav-links a {
+            color: var(--black);
+            text-decoration: none;
+
+            font-family: monospace;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: .08em;
+
+            text-transform: uppercase;
+        }
+
+        .clubs-nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .clubs-login {
+            border: 1px solid var(--black);
+
+            padding: 12px 18px;
+        }
+
+
+        /* HERO */
+
+        .clubs-container {
+            width: min(
+                1400px,
+                calc(100% - 48px)
+            );
+
+            margin: 0 auto;
+        }
+
+        .clubs-hero {
+            padding: 90px 0 60px;
+
+            border-bottom: 1px solid var(--black);
+        }
+
+        .clubs-eyebrow {
+            margin: 0 0 20px;
+
+            font-family: monospace;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: .12em;
+
+            text-transform: uppercase;
+        }
+
+        .clubs-title {
+            margin: 0;
+
+            font-family:
+                "Arial Black",
+                Arial,
+                sans-serif;
+
+            font-size: clamp(
+                65px,
+                10vw,
+                150px
+            );
+
+            line-height: .8;
+
+            letter-spacing: -.07em;
+
+            text-transform: uppercase;
+        }
+
+        .clubs-intro {
+            max-width: 700px;
+
+            margin: 45px 0 0;
+
+            font-size: 20px;
+
+            line-height: 1.45;
+        }
+
+
+        /* SECTION */
+
+        .clubs-section {
+            padding: 55px 0 100px;
+        }
+
+        .clubs-section-heading {
+            padding: 14px 0;
+
+            border-top: 1px solid var(--black);
+            border-bottom: 1px solid var(--black);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            font-family: monospace;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: .08em;
+
+            text-transform: uppercase;
+        }
+
+        .clubs-count {
+            color: var(--muted);
+        }
+
+
+        /* GRID */
+
+        .clubs-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(0, 1fr)
+                );
+
+            gap: 1px;
+
+            margin-top: 1px;
+
+            background: var(--black);
+        }
+
+        .club-card {
+            min-height: 330px;
+
+            padding: 28px;
+
+            background: var(--white);
+
+            display: flex;
+            flex-direction: column;
+
+            transition:
+                background 180ms ease;
+        }
+
+        .club-card:hover {
+            background: #eeeeea;
+        }
+
+        .club-number {
+            font-family: monospace;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            color: var(--muted);
+        }
+
+        .club-title {
+            margin: 60px 0 18px;
+
+            font-family:
+                "Arial Black",
+                Arial,
+                sans-serif;
+
+            font-size: clamp(
+                28px,
+                3vw,
+                46px
+            );
+
+            line-height: .95;
+
+            letter-spacing: -.055em;
+
+            text-transform: uppercase;
+        }
+
+        .club-description {
+            margin: 0;
+
+            color: #444444;
+
+            font-size: 15px;
+
+            line-height: 1.5;
+        }
+
+        .club-meta {
+            margin-top: auto;
+
+            padding-top: 25px;
+
+            border-top: 1px solid var(--border);
+
+            display: flex;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            font-family: monospace;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+        }
+
+        .club-button {
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 12px 15px;
+
+            border: 1px solid var(--black);
+
+            background: var(--black);
+
+            color: var(--white);
+
+            text-decoration: none;
+
+            font-family: monospace;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: .06em;
+
+            text-transform: uppercase;
+        }
+
+        .club-button:hover {
+            background: transparent;
+            color: var(--black);
+        }
+
+
+        /* LOADING / ERROR */
+
+        .clubs-message {
+            padding: 100px 20px;
+
+            text-align: center;
+
+            background: var(--white);
+        }
+
+        .clubs-message h2 {
+            margin: 0 0 12px;
+
+            font-family:
+                "Arial Black",
+                Arial,
+                sans-serif;
+
+            font-size: 40px;
+
+            letter-spacing: -.04em;
+        }
+
+        .clubs-message p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 15px;
+        }
+
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+
+            .clubs-grid {
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0, 1fr)
+                    );
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .clubs-nav-inner,
+            .clubs-container {
+                width: calc(100% - 30px);
+            }
+
+            .clubs-nav-inner {
+                min-height: 68px;
+            }
+
+            .clubs-nav-links {
+                gap: 12px;
+            }
+
+            .clubs-nav-links a:not(.clubs-login) {
+                display: none;
+            }
+
+            .clubs-hero {
+                padding: 65px 0 45px;
+            }
+
+            .clubs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .club-card {
+                min-height: 300px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="clubs-page">
+
+    <nav class="clubs-nav">
+
+        <div class="clubs-nav-inner">
+
+            <a
+                href="index.html"
+                class="clubs-logo"
+            >
+                CATALYST
+            </a>
+
+            <div class="clubs-nav-links">
+
+                <a href="events.html">
+                    Events
+                </a>
+
+                <a href="my-events.html">
+                    My Events
+                </a>
+
+                <a href="clubs.html">
+                    Clubs
+                </a>
+
+                <a href="announcements.html">
+                    Announcements
+                </a>
+
+                <a
+                    href="login.html"
+                    class="clubs-login"
+                >
+                    Login
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <main class="clubs-container">
+
+        <header class="clubs-hero">
+
+            <p class="clubs-eyebrow">
+                Catalyst / Campus Community
+            </p>
+
+            <h1 class="clubs-title">
+                CLUBS
+            </h1>
+
+            <p class="clubs-intro">
+                Discover the communities building things,
+                running events and bringing people together
+                across campus.
+            </p>
+
+        </header>
+
+
+        <section class="clubs-section">
+
+            <div class="clubs-section-heading">
+
+                <span>
+                    ALL CLUBS
+                </span>
+
+                <span
+                    id="clubCount"
+                    class="clubs-count"
+                >
+                    LOADING...
+                </span>
+
+            </div>
+
+
+            <div
+                id="clubsGrid"
+                class="clubs-grid"
+            >
+
+                <div
+                    class="clubs-message"
+                >
+
+                    <h2>
+                        Loading clubs...
+                    </h2>
+
+                    <p>
+                        Getting the campus communities.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="assets/js/catalyst-clubs.js"></script>
+
+</body>
+
+</html>

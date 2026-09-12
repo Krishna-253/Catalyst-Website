@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Create Account — Catalyst</title>
+
+    <link
+        rel="stylesheet"
+        href="assets/built/screen.css"
+    >
+
+
+    <style>
+
+        :root {
+            --black: #111111;
+            --white: #f7f7f2;
+            --muted: #707070;
+            --border: rgba(17, 17, 17, 0.18);
+            --accent: #d9ff00;
+        }
+
+
+        body {
+            margin: 0;
+            background: var(--white);
+            color: var(--black);
+        }
+
+
+        .register-page {
+            min-height: 100vh;
+        }
+
+
+        /* =========================================================
+           NAVIGATION
+           ========================================================= */
+
+        .register-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            border-bottom: 1px solid var(--border);
+            background: var(--white);
+        }
+
+
+        .register-nav-inner {
+            width: min(1400px, calc(100% - 48px));
+            min-height: 78px;
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        .register-logo {
+            color: var(--black);
+            text-decoration: none;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+        }
+
+
+        .register-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+
+        .register-nav-links a {
+            color: var(--black);
+            text-decoration: none;
+
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+
+        .register-nav-links a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================================================
+           MAIN
+           ========================================================= */
+
+        .register-container {
+            width: min(1400px, calc(100% - 48px));
+            margin: 0 auto;
+
+            padding: 80px 0 120px;
+        }
+
+
+        .register-layout {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 80px;
+
+            border-top: 1px solid var(--black);
+            border-bottom: 1px solid var(--black);
+        }
+
+
+        /* =========================================================
+           LEFT SIDE
+           ========================================================= */
+
+        .register-intro {
+            padding: 55px 40px 55px 0;
+        }
+
+
+        .register-eyebrow {
+            margin: 0 0 20px;
+
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+
+        .register-title {
+            margin: 0;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: clamp(60px, 8vw, 115px);
+            line-height: .82;
+            letter-spacing: -.07em;
+            text-transform: uppercase;
+        }
+
+
+        .register-description {
+            max-width: 600px;
+            margin: 40px 0 0;
+
+            font-size: 19px;
+            line-height: 1.5;
+        }
+
+
+        /* =========================================================
+           FORM
+           ========================================================= */
+
+        .register-form-wrapper {
+            padding: 55px 0 55px 40px;
+
+            border-left: 1px solid var(--border);
+        }
+
+
+        .register-form {
+            max-width: 500px;
+        }
+
+
+        .register-field {
+            margin-bottom: 22px;
+        }
+
+
+        .register-label {
+            display: block;
+            margin-bottom: 9px;
+
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+
+        .register-input,
+        .register-select {
+            width: 100%;
+            box-sizing: border-box;
+
+            padding: 15px;
+
+            border: 1px solid var(--black);
+            border-radius: 0;
+
+            background: transparent;
+            color: var(--black);
+
+            font-family: inherit;
+            font-size: 15px;
+        }
+
+
+        .register-input:focus,
+        .register-select:focus {
+            outline: 2px solid var(--black);
+            outline-offset: 2px;
+        }
+
+
+        .register-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+
+        .register-button {
+            width: 100%;
+
+            margin-top: 8px;
+            padding: 17px 20px;
+
+            border: 1px solid var(--black);
+            background: var(--black);
+            color: var(--white);
+
+            cursor: pointer;
+
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+
+        .register-button:hover {
+            background: transparent;
+            color: var(--black);
+        }
+
+
+        .register-button:disabled {
+            cursor: not-allowed;
+            opacity: .55;
+        }
+
+
+        /* =========================================================
+           MESSAGE
+           ========================================================= */
+
+        .register-message {
+            display: none;
+
+            margin-bottom: 25px;
+            padding: 15px;
+
+            border: 1px solid var(--black);
+
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+
+        .register-message.visible {
+            display: block;
+        }
+
+
+        .register-message.success {
+            background: var(--accent);
+        }
+
+
+        .register-message.error {
+            background: #eeeeea;
+        }
+
+
+        /* =========================================================
+           BOTTOM
+           ========================================================= */
+
+        .register-login {
+            margin-top: 30px;
+
+            color: var(--muted);
+
+            font-family: monospace;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+
+        .register-login a {
+            color: var(--black);
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 850px) {
+
+            .register-layout {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+
+            .register-intro {
+                padding-right: 0;
+                padding-bottom: 45px;
+            }
+
+
+            .register-form-wrapper {
+                padding-left: 0;
+                padding-top: 45px;
+
+                border-left: none;
+                border-top: 1px solid var(--border);
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .register-nav-inner,
+            .register-container {
+                width: calc(100% - 30px);
+            }
+
+
+            .register-nav-inner {
+                min-height: 68px;
+            }
+
+
+            .register-nav-links a:not(:first-child) {
+                display: none;
+            }
+
+
+            .register-container {
+                padding-top: 55px;
+            }
+
+
+            .register-title {
+                font-size: 65px;
+            }
+
+
+            .register-row {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="register-page">
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="register-nav">
+
+            <div class="register-nav-inner">
+
+
+                <a
+                    href="index.html"
+                    class="register-logo"
+                >
+                    CATALYST
+                </a>
+
+
+                <div class="register-nav-links">
+
+                    <a href="events.html">
+                        Events
+                    </a>
+
+                    <a href="login.html">
+                        Login
+                    </a>
+
+                    <a href="index.html">
+                        Home
+                    </a>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+        <!-- MAIN -->
+
+        <main class="register-container">
+
+            <section class="register-layout">
+
+
+                <!-- INTRO -->
+
+                <div class="register-intro">
+
+                    <p class="register-eyebrow">
+                        Catalyst / College Community
+                    </p>
+
+
+                    <h1 class="register-title">
+                        JOIN<br>
+                        US.
+                    </h1>
+
+
+                    <p class="register-description">
+                        Create your Catalyst account to discover
+                        events, register for activities and keep track
+                        of everything you participate in across campus.
+                    </p>
+
+                </div>
+
+
+                <!-- FORM -->
+
+                <div class="register-form-wrapper">
+
+                    <form
+                        id="registerForm"
+                        class="register-form"
+                    >
+
+
+                        <div
+                            id="registerMessage"
+                            class="register-message"
+                        ></div>
+
+
+                        <!-- NAME -->
+
+                        <div class="register-field">
+
+                            <label
+                                for="name"
+                                class="register-label"
+                            >
+                                Full Name
+                            </label>
+
+
+                            <input
+                                id="name"
+                                name="name"
+                                class="register-input"
+                                type="text"
+                                placeholder="Your full name"
+                                autocomplete="name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="register-field">
+
+                            <label
+                                for="email"
+                                class="register-label"
+                            >
+                                College Email
+                            </label>
+
+
+                            <input
+                                id="email"
+                                name="email"
+                                class="register-input"
+                                type="email"
+                                placeholder="you@college.edu"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- PASSWORD -->
+
+                        <div class="register-field">
+
+                            <label
+                                for="password"
+                                class="register-label"
+                            >
+                                Password
+                            </label>
+
+
+                            <input
+                                id="password"
+                                name="password"
+                                class="register-input"
+                                type="password"
+                                placeholder="Minimum 8 characters"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- CONFIRM PASSWORD -->
+
+                        <div class="register-field">
+
+                            <label
+                                for="confirmPassword"
+                                class="register-label"
+                            >
+                                Confirm Password
+                            </label>
+
+
+                            <input
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                class="register-input"
+                                type="password"
+                                placeholder="Enter password again"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- COURSE + BRANCH -->
+
+                        <div class="register-row">
+
+
+                            <div class="register-field">
+
+                                <label
+                                    for="course"
+                                    class="register-label"
+                                >
+                                    Course
+                                </label>
+
+
+                                <input
+                                    id="course"
+                                    name="course"
+                                    class="register-input"
+                                    type="text"
+                                    placeholder="B.Tech."
+                                >
+
+                            </div>
+
+
+                            <div class="register-field">
+
+                                <label
+                                    for="branch"
+                                    class="register-label"
+                                >
+                                    Branch
+                                </label>
+
+
+                                <input
+                                    id="branch"
+                                    name="branch"
+                                    class="register-input"
+                                    type="text"
+                                    placeholder="AIML"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- YEAR -->
+
+                        <div class="register-field">
+
+                            <label
+                                for="year"
+                                class="register-label"
+                            >
+                                Year
+                            </label>
+
+
+                            <select
+                                id="year"
+                                name="year"
+                                class="register-select"
+                            >
+
+                                <option value="">
+                                    Select Year
+                                </option>
+
+                                <option value="1">
+                                    1st Year
+                                </option>
+
+                                <option value="2">
+                                    2nd Year
+                                </option>
+
+                                <option value="3">
+                                    3rd Year
+                                </option>
+
+                                <option value="4">
+                                    4th Year
+                                </option>
+
+                                <option value="5">
+                                    5th Year
+                                </option>
+
+                                <option value="6">
+                                    6th Year
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- SUBMIT -->
+
+                        <button
+                            id="registerButton"
+                            class="register-button"
+                            type="submit"
+                        >
+                            CREATE ACCOUNT →
+                        </button>
+
+
+                        <p class="register-login">
+                            Already have an account?
+                            <a href="login.html">
+                                Log in
+                            </a>
+                        </p>
+
+
+                    </form>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="assets/js/catalyst-register.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Event — Catalyst</title>
+
+    <link
+        rel="stylesheet"
+        href="assets/built/screen.css"
+    >
+
+
+    <style>
+
+        :root {
+            --black: #111111;
+            --white: #f7f7f2;
+            --muted: #707070;
+            --border: rgba(17, 17, 17, 0.18);
+            --accent: #d9ff00;
+        }
+
+
+        body {
+            margin: 0;
+            background: var(--white);
+            color: var(--black);
+        }
+
+
+        .event-page {
+            min-height: 100vh;
+        }
+
+
+        /* =========================================================
+           NAVIGATION
+           ========================================================= */
+
+        .event-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            width: 100%;
+
+            border-bottom: 1px solid var(--border);
+            background: var(--white);
+        }
+
+
+        .event-nav-inner {
+            width: min(1400px, calc(100% - 48px));
+            min-height: 78px;
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+
+        .event-logo {
+            color: var(--black);
+            text-decoration: none;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+        }
+
+
+        .event-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+
+        .event-nav-links a {
+            color: var(--black);
+            text-decoration: none;
+
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+
+        .event-nav-links a:hover {
+            text-decoration: underline;
+        }
+
+
+        .event-login {
+            padding: 12px 18px;
+            border: 1px solid var(--black);
+        }
+
+
+        /* =========================================================
+           MAIN
+           ========================================================= */
+
+        .event-container {
+            width: min(1400px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+
+        .event-back {
+            display: inline-block;
+            margin: 35px 0;
+
+            color: var(--black);
+            text-decoration: none;
+
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+
+
+        .event-back:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================================================
+           HERO
+           ========================================================= */
+
+        .event-hero {
+            border-top: 1px solid var(--black);
+            border-bottom: 1px solid var(--black);
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+
+        .event-hero-content {
+            padding: 55px 45px 55px 0;
+        }
+
+
+        .event-category {
+            display: inline-block;
+            margin-bottom: 25px;
+
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+
+        .event-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            margin-left: 10px;
+            padding: 7px 9px;
+
+            background: var(--accent);
+
+            font-family: monospace;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+
+        .event-status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--black);
+        }
+
+
+        .event-title {
+            margin: 0;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: clamp(55px, 7vw, 105px);
+            line-height: .84;
+            letter-spacing: -.07em;
+            text-transform: uppercase;
+        }
+
+
+        .event-short-description {
+            max-width: 680px;
+            margin: 38px 0 0;
+
+            font-size: 19px;
+            line-height: 1.5;
+        }
+
+
+        .event-banner {
+            min-height: 470px;
+
+            background: var(--black);
+
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+
+        /* =========================================================
+           EVENT META
+           ========================================================= */
+
+        .event-meta {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+
+            border-bottom: 1px solid var(--black);
+        }
+
+
+        .event-meta-item {
+            padding: 25px 20px 25px 0;
+
+            border-right: 1px solid var(--border);
+        }
+
+
+        .event-meta-item:not(:first-child) {
+            padding-left: 20px;
+        }
+
+
+        .event-meta-item:last-child {
+            border-right: none;
+        }
+
+
+        .event-meta-label {
+            margin-bottom: 8px;
+
+            color: var(--muted);
+
+            font-family: monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+
+        .event-meta-value {
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+
+        /* =========================================================
+           REGISTRATION BAR
+           ========================================================= */
+
+        .event-register-bar {
+            margin: 45px 0;
+
+            padding: 25px;
+
+            border: 1px solid var(--black);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+
+        .event-register-info {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+
+        .event-register-heading {
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 25px;
+            letter-spacing: -.04em;
+            text-transform: uppercase;
+        }
+
+
+        .event-register-subtext {
+            color: var(--muted);
+
+            font-family: monospace;
+            font-size: 11px;
+        }
+
+
+        .event-register-button {
+            border: 1px solid var(--black);
+            background: var(--black);
+            color: var(--white);
+
+            padding: 16px 25px;
+
+            cursor: pointer;
+
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+
+
+        .event-register-button:hover {
+            background: transparent;
+            color: var(--black);
+        }
+
+
+        .event-register-button:disabled {
+            cursor: not-allowed;
+            opacity: .55;
+        }
+
+
+        /* =========================================================
+           CONTENT
+           ========================================================= */
+
+        .event-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 70px;
+
+            padding: 25px 0 100px;
+        }
+
+
+        .event-main-content {
+            min-width: 0;
+        }
+
+
+        .event-section {
+            padding: 35px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .event-section:first-child {
+            padding-top: 10px;
+        }
+
+
+        .event-section-title {
+            margin: 0 0 20px;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 30px;
+            letter-spacing: -.05em;
+            text-transform: uppercase;
+        }
+
+
+        .event-section-text {
+            margin: 0;
+
+            font-size: 16px;
+            line-height: 1.65;
+
+            white-space: pre-line;
+        }
+
+
+        .event-sidebar {
+            padding-top: 10px;
+        }
+
+
+        .event-sidebar-box {
+            padding: 25px 0;
+
+            border-top: 1px solid var(--black);
+            border-bottom: 1px solid var(--black);
+        }
+
+
+        .event-sidebar-label {
+            margin-bottom: 10px;
+
+            color: var(--muted);
+
+            font-family: monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+
+        .event-sidebar-value {
+            margin-bottom: 25px;
+
+            font-size: 17px;
+            line-height: 1.4;
+        }
+
+
+        .event-sidebar-value:last-child {
+            margin-bottom: 0;
+        }
+
+
+        /* =========================================================
+           BROCHURE
+           ========================================================= */
+
+        .event-brochure {
+            display: inline-block;
+
+            margin-top: 15px;
+            padding: 12px 15px;
+
+            border: 1px solid var(--black);
+
+            color: var(--black);
+            text-decoration: none;
+
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+
+        .event-brochure:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+
+        /* =========================================================
+           LOADING / ERROR
+           ========================================================= */
+
+        .event-loading {
+            min-height: 70vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-family: monospace;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+
+        .event-error {
+            max-width: 700px;
+            margin: 100px auto;
+            padding: 50px;
+
+            border: 1px solid var(--black);
+            text-align: center;
+        }
+
+
+        .event-error h1 {
+            margin: 0 0 15px;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 45px;
+            letter-spacing: -.05em;
+            text-transform: uppercase;
+        }
+
+
+        .event-error p {
+            margin: 0 0 25px;
+            color: var(--muted);
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .event-hero {
+                grid-template-columns: 1fr;
+            }
+
+
+            .event-hero-content {
+                padding-right: 0;
+            }
+
+
+            .event-banner {
+                min-height: 350px;
+            }
+
+
+            .event-meta {
+                grid-template-columns: 1fr 1fr;
+            }
+
+
+            .event-meta-item:nth-child(2) {
+                border-right: none;
+            }
+
+
+            .event-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .event-nav-inner,
+            .event-container {
+                width: calc(100% - 30px);
+            }
+
+
+            .event-nav-inner {
+                min-height: 68px;
+            }
+
+
+            .event-nav-links {
+                gap: 12px;
+            }
+
+
+            .event-nav-links a:not(.event-login) {
+                display: none;
+            }
+
+
+            .event-title {
+                font-size: clamp(48px, 15vw, 75px);
+            }
+
+
+            .event-hero-content {
+                padding: 40px 0;
+            }
+
+
+            .event-meta {
+                grid-template-columns: 1fr;
+            }
+
+
+            .event-meta-item,
+            .event-meta-item:not(:first-child) {
+                padding: 20px 0;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+
+            .event-meta-item:last-child {
+                border-bottom: none;
+            }
+
+
+            .event-register-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+
+            .event-register-button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div id="eventPage" class="event-page">
+
+        <div class="event-loading">
+            Loading event...
+        </div>
+
+    </div>
+
+
+    <script src="assets/js/catalyst-event.js"></script>
+
+</body>
+
+</html>

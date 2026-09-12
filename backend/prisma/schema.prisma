@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  STUDENT
+  ORGANIZER
+  ADMIN
+}
+
+enum ClubMemberRole {
+  OWNER
+  MANAGER
+  MEMBER
+}
+
+enum EventApprovalStatus {
+  DRAFT
+  PENDING_APPROVAL
+  PUBLISHED
+  REJECTED
+}
+
+enum RegistrationStatus {
+  REGISTERED
+  CANCELLED
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+
+  course       String?
+  branch       String?
+  year         Int?
+
+  role         UserRole @default(STUDENT)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  registrations Registration[]
+  eventsCreated  Event[]        @relation("EventCreator")
+  clubMemberships ClubMember[]
+  announcements  Announcement[] @relation("AnnouncementCreator")
+}
+
+model Club {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  logoUrl     String?
+  contactEmail String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members       ClubMember[]
+  events        Event[]
+  announcements Announcement[]
+}
+
+model ClubMember {
+  id        String          @id @default(uuid())
+  role      ClubMemberRole  @default(MEMBER)
+
+  userId    String
+  clubId    String
+
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  club      Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
+
+  joinedAt  DateTime @default(now())
+
+  @@unique([userId, clubId])
+}
+
+model Event {
+  id          String   @id @default(uuid())
+
+  title       String
+  slug        String   @unique
+  description String
+
+  category    String
+  bannerUrl   String?
+  brochureUrl String?
+
+  venue       String?
+  eligibility String?
+  rules       String?
+  prizes      String?
+  timeline    String?
+
+  registrationStart DateTime
+  registrationEnd   DateTime
+
+  eventStart DateTime
+  eventEnd   DateTime
+
+  capacity   Int?
+
+  approvalStatus EventApprovalStatus @default(DRAFT)
+
+  clubId      String
+  createdById String
+
+  club      Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  createdBy User @relation("EventCreator", fields: [createdById], references: [id])
+
+  registrations Registration[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@index([clubId])
+  @@index([eventStart])
+  @@index([registrationStart])
+  @@index([registrationEnd])
+  @@index([approvalStatus])
+}
+
+model Registration {
+  id       String @id @default(uuid())
+
+  eventId  String
+  userId   String
+
+  status   RegistrationStatus @default(REGISTERED)
+
+  registeredAt DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, userId])
+  @@index([userId])
+  @@index([eventId])
+}
+
+model Announcement {
+  id      String  @id @default(uuid())
+  title   String
+  content String
+
+  published Boolean @default(false)
+
+  clubId    String
+  createdById String
+
+  club      Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  createdBy User @relation("AnnouncementCreator", fields: [createdById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([clubId])
+  @@index([published])
+}

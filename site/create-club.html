@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Create Club | Catalyst</title>
+
+    <style>
+        :root {
+            --black: #111111;
+            --white: #f5f5f0;
+            --muted: #777777;
+            --border: #cfcfc8;
+            --accent: #d8ff00;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--white);
+            color: var(--black);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .create-nav {
+            border-bottom: 1px solid var(--black);
+        }
+
+        .create-nav-inner {
+            width: min(1400px, calc(100% - 48px));
+            min-height: 78px;
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .create-logo {
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 24px;
+            letter-spacing: -0.07em;
+            text-decoration: none;
+        }
+
+        .create-nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .create-nav-links a {
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        .create-nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .create-container {
+            width: min(900px, calc(100% - 48px));
+            margin: 0 auto;
+            padding: 80px 0 120px;
+        }
+
+        .create-eyebrow {
+            margin: 0 0 20px;
+
+            color: var(--muted);
+
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .create-title {
+            margin: 0;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: clamp(55px, 9vw, 110px);
+            line-height: 0.85;
+            letter-spacing: -0.075em;
+            text-transform: uppercase;
+        }
+
+        .create-intro {
+            max-width: 650px;
+            margin: 35px 0 60px;
+
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .create-form {
+            border-top: 1px solid var(--black);
+        }
+
+        .form-group {
+            padding: 25px 0;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+
+            padding: 15px 0;
+
+            border: none;
+            border-bottom: 1px solid var(--black);
+
+            outline: none;
+
+            background: transparent;
+            color: var(--black);
+
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            border-bottom-width: 2px;
+        }
+
+        .form-help {
+            margin-top: 8px;
+
+            color: var(--muted);
+
+            font-family: monospace;
+            font-size: 10px;
+        }
+
+        .submit-row {
+            padding-top: 35px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .submit-button {
+            padding: 16px 22px;
+
+            border: 1px solid var(--black);
+            background: var(--black);
+            color: var(--white);
+
+            cursor: pointer;
+
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .submit-button:hover {
+            background: var(--accent);
+            color: var(--black);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .message {
+            margin-top: 25px;
+            padding: 18px;
+
+            border: 1px solid var(--black);
+
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 650px) {
+
+            .create-nav-inner,
+            .create-container {
+                width: calc(100% - 30px);
+            }
+
+            .create-nav-inner {
+                min-height: 68px;
+            }
+
+            .create-nav-links {
+                gap: 12px;
+            }
+
+            .create-nav-links a:not(.create-login) {
+                display: none;
+            }
+
+            .create-container {
+                padding-top: 60px;
+            }
+
+            .submit-row {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .submit-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="create-nav">
+
+        <div class="create-nav-inner">
+
+            <a
+                href="index.html"
+                class="create-logo"
+            >
+                CATALYST
+            </a>
+
+            <div class="create-nav-links">
+
+                <a href="organizer.html">
+                    Dashboard
+                </a>
+
+                <a href="events.html">
+                    Events
+                </a>
+
+                <a
+                    href="login.html"
+                    class="create-login"
+                >
+                    Login
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <main class="create-container">
+
+        <p class="create-eyebrow">
+            Organizer / Clubs
+        </p>
+
+        <h1 class="create-title">
+            CREATE<br>
+            CLUB
+        </h1>
+
+        <p class="create-intro">
+            Create a campus club and start building its community
+            on Catalyst.
+        </p>
+
+
+        <form
+            id="createClubForm"
+            class="create-form"
+        >
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="name"
+                >
+                    Club Name *
+                </label>
+
+                <input
+                    id="name"
+                    name="name"
+                    class="form-input"
+                    type="text"
+                    placeholder="e.g. Coding Club"
+                    required
+                    maxlength="100"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="description"
+                >
+                    Description
+                </label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    class="form-textarea"
+                    placeholder="What is this club about?"
+                    maxlength="2000"
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="logoUrl"
+                >
+                    Logo URL
+                </label>
+
+                <input
+                    id="logoUrl"
+                    name="logoUrl"
+                    class="form-input"
+                    type="url"
+                    placeholder="https://..."
+                >
+
+                <div class="form-help">
+                    Optional — image hosting/upload will be added later.
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="contactEmail"
+                >
+                    Contact Email
+                </label>
+
+                <input
+                    id="contactEmail"
+                    name="contactEmail"
+                    class="form-input"
+                    type="email"
+                    placeholder="club@college.edu"
+                >
+
+            </div>
+
+
+            <div class="submit-row">
+
+                <span class="form-help">
+                    Your account will become the club owner.
+                </span>
+
+                <button
+                    id="submitButton"
+                    class="submit-button"
+                    type="submit"
+                >
+                    Create Club →
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <div
+            id="message"
+            class="message hidden"
+        ></div>
+
+    </main>
+
+
+    <script src="assets/js/catalyst-nav.js"></script>
+    <script src="assets/js/catalyst-create-club.js"></script>
+
+</body>
+</html>

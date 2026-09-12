@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Events — Catalyst</title>
+
+    <link
+        rel="stylesheet"
+        href="assets/built/screen.css"
+    >
+
+    <style>
+        .my-events-page {
+            min-height: 100vh;
+            background: #f7f7f5;
+            color: #111;
+        }
+
+        .my-events-nav {
+            border-bottom: 1px solid #ddd;
+            background: #fff;
+        }
+
+        .my-events-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .my-events-logo {
+            color: #111;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+
+        .my-events-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .my-events-nav-link {
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .my-events-nav-link:hover {
+            color: #111;
+        }
+
+        .my-events-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 24px 100px;
+        }
+
+        .my-events-eyebrow {
+            margin: 0 0 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #777;
+        }
+
+        .my-events-title {
+            margin: 0;
+            font-size: clamp(42px, 7vw, 80px);
+            line-height: 0.95;
+            letter-spacing: -0.06em;
+        }
+
+        .my-events-subtitle {
+            max-width: 650px;
+            margin: 20px 0 0;
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .my-events-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            margin-top: 55px;
+        }
+
+        .my-event-card {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border: 1px solid #ddd;
+            overflow: hidden;
+        }
+
+        .my-event-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            background: #e8e8e5;
+        }
+
+        .my-event-image-placeholder {
+            width: 100%;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e8e8e5;
+            color: #777;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .my-event-content {
+            padding: 25px;
+        }
+
+        .my-event-category {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #777;
+        }
+
+        .my-event-title {
+            margin: 9px 0 0;
+            font-size: 27px;
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+        }
+
+        .my-event-club {
+            margin-top: 9px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .my-event-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .my-event-meta-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #888;
+        }
+
+        .my-event-meta-value {
+            margin-top: 5px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .my-event-status {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 7px 10px;
+            background: #111;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .my-event-actions {
+            display: flex;
+            gap: 10px;
+            padding: 0 25px 25px;
+        }
+
+        .my-event-button {
+            display: inline-block;
+            padding: 12px 16px;
+            background: #111;
+            color: #fff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .my-event-button:hover {
+            opacity: 0.85;
+        }
+
+        .my-event-button-secondary {
+            background: transparent;
+            color: #111;
+            border: 1px solid #ccc;
+        }
+
+        .empty-state {
+            margin-top: 50px;
+            padding: 60px 30px;
+            background: #fff;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .empty-state h2 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: -0.03em;
+        }
+
+        .empty-state p {
+            margin: 12px auto 0;
+            max-width: 500px;
+            color: #777;
+            line-height: 1.6;
+        }
+
+        .empty-state-button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 13px 18px;
+            background: #111;
+            color: #fff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .error-state {
+            margin-top: 50px;
+            padding: 40px;
+            background: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .error-state h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .error-state p {
+            margin: 12px 0 0;
+            color: #666;
+        }
+
+        .error-state-button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 18px;
+            background: #111;
+            color: #fff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        @media (max-width: 800px) {
+
+            .my-events-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .my-events-container {
+                padding-top: 40px;
+            }
+
+            .my-events-nav-inner {
+                padding: 16px;
+            }
+
+            .my-events-nav-links {
+                gap: 12px;
+            }
+
+            .my-events-nav-link {
+                font-size: 12px;
+            }
+
+            .my-event-meta {
+                grid-template-columns: 1fr;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div
+        id="myEventsPage"
+        class="my-events-page"
+    ></div>
+
+
+    <script src="assets/js/catalyst-my-events.js"></script>
+
+</body>
+</html>

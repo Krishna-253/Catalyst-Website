@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Events — Catalyst</title>
+
+    <link
+        rel="stylesheet"
+        href="assets/built/screen.css"
+    >
+
+    <style>
+        /* =========================================================
+           CATALYST EVENTS PAGE
+           ========================================================= */
+
+        :root {
+            --catalyst-black: #111111;
+            --catalyst-white: #f7f7f2;
+            --catalyst-border: rgba(17, 17, 17, 0.18);
+            --catalyst-muted: #707070;
+            --catalyst-accent: #d9ff00;
+        }
+
+
+        body {
+            background: var(--catalyst-white);
+            color: var(--catalyst-black);
+        }
+
+
+        .catalyst-events-page {
+            width: 100%;
+            min-height: 100vh;
+        }
+
+
+        /* ---------- Navigation ---------- */
+
+        .catalyst-nav {
+            width: 100%;
+            border-bottom: 1px solid var(--catalyst-border);
+            background: var(--catalyst-white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+
+        .catalyst-nav-inner {
+            width: min(1400px, calc(100% - 48px));
+            margin: 0 auto;
+            min-height: 78px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+        }
+
+
+        .catalyst-logo {
+            text-decoration: none;
+            color: var(--catalyst-black);
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+        }
+
+
+        .catalyst-logo span {
+            display: inline-block;
+            transform: skew(-8deg);
+        }
+
+
+        .catalyst-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+
+        .catalyst-nav-links a {
+            color: var(--catalyst-black);
+            text-decoration: none;
+
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+
+        .catalyst-nav-links a:hover {
+            text-decoration: underline;
+        }
+
+
+        .catalyst-login {
+            border: 1px solid var(--catalyst-black);
+            padding: 12px 18px;
+        }
+
+
+        /* ---------- Hero ---------- */
+
+        .catalyst-events-hero {
+            width: min(1400px, calc(100% - 48px));
+            margin: 0 auto;
+            padding: 90px 0 55px;
+        }
+
+
+        .catalyst-eyebrow {
+            margin: 0 0 18px;
+
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+
+        .catalyst-events-title {
+            margin: 0;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: clamp(58px, 9vw, 140px);
+            line-height: 0.82;
+            letter-spacing: -0.07em;
+            text-transform: uppercase;
+        }
+
+
+        .catalyst-events-intro {
+            max-width: 700px;
+            margin: 42px 0 0;
+
+            font-size: 20px;
+            line-height: 1.45;
+        }
+
+
+        /* ---------- Filters ---------- */
+
+        .catalyst-controls {
+            width: min(1400px, calc(100% - 48px));
+            margin: 0 auto 50px;
+
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 12px;
+        }
+
+
+        .catalyst-control {
+            width: 100%;
+            box-sizing: border-box;
+
+            border: 1px solid var(--catalyst-black);
+            background: transparent;
+
+            padding: 16px 18px;
+
+            color: var(--catalyst-black);
+            font-family: monospace;
+            font-size: 13px;
+        }
+
+
+        .catalyst-control:focus {
+            outline: 2px solid var(--catalyst-black);
+            outline-offset: 2px;
+        }
+
+
+        /* ---------- Event section ---------- */
+
+        .catalyst-events-section {
+            width: min(1400px, calc(100% - 48px));
+            margin: 0 auto;
+            padding-bottom: 100px;
+        }
+
+
+        .catalyst-section-heading {
+            border-top: 1px solid var(--catalyst-black);
+            border-bottom: 1px solid var(--catalyst-black);
+
+            padding: 14px 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+
+        .catalyst-event-count {
+            color: var(--catalyst-muted);
+        }
+
+
+        .catalyst-events-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1px;
+
+            margin-top: 1px;
+            background: var(--catalyst-black);
+            border-bottom: 1px solid var(--catalyst-black);
+        }
+
+
+        /* ---------- Event card ---------- */
+
+        .catalyst-event-card {
+            min-height: 430px;
+            padding: 26px;
+
+            background: var(--catalyst-white);
+
+            display: flex;
+            flex-direction: column;
+
+            transition:
+                transform 180ms ease,
+                background 180ms ease;
+        }
+
+
+        .catalyst-event-card:hover {
+            background: #eeeeea;
+        }
+
+
+        .catalyst-event-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+
+        .catalyst-event-category {
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+
+        .catalyst-event-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            padding: 6px 8px;
+
+            background: var(--catalyst-accent);
+
+            font-family: monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+
+        .catalyst-status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--catalyst-black);
+        }
+
+
+        .catalyst-event-title {
+            margin: 55px 0 18px;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: clamp(28px, 3vw, 48px);
+            line-height: 0.95;
+            letter-spacing: -0.055em;
+            text-transform: uppercase;
+        }
+
+
+        .catalyst-event-description {
+            margin: 0;
+
+            color: #444444;
+
+            font-size: 15px;
+            line-height: 1.5;
+
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+
+        .catalyst-event-meta {
+            margin-top: auto;
+            padding-top: 30px;
+
+            border-top: 1px solid var(--catalyst-border);
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+
+        .catalyst-meta-label {
+            margin-bottom: 6px;
+
+            color: var(--catalyst-muted);
+
+            font-family: monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+
+        .catalyst-meta-value {
+            font-size: 14px;
+            line-height: 1.35;
+        }
+
+
+        .catalyst-event-footer {
+            margin-top: 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+
+        .catalyst-registration-count {
+            color: var(--catalyst-muted);
+
+            font-family: monospace;
+            font-size: 11px;
+        }
+
+
+        .catalyst-view-button {
+            display: inline-block;
+
+            padding: 12px 16px;
+
+            border: 1px solid var(--catalyst-black);
+            background: var(--catalyst-black);
+
+            color: var(--catalyst-white);
+            text-decoration: none;
+
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+
+        .catalyst-view-button:hover {
+            background: transparent;
+            color: var(--catalyst-black);
+        }
+
+
+        /* ---------- Loading ---------- */
+
+        .catalyst-loading {
+            grid-column: 1 / -1;
+
+            padding: 100px 20px;
+
+            background: var(--catalyst-white);
+
+            text-align: center;
+
+            font-family: monospace;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+
+        /* ---------- Empty/Error ---------- */
+
+        .catalyst-message {
+            grid-column: 1 / -1;
+
+            padding: 100px 20px;
+
+            background: var(--catalyst-white);
+
+            text-align: center;
+        }
+
+
+        .catalyst-message-title {
+            margin: 0 0 10px;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 36px;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+        }
+
+
+        .catalyst-message-text {
+            margin: 0;
+
+            color: var(--catalyst-muted);
+            font-size: 15px;
+        }
+
+
+        /* ---------- Responsive ---------- */
+
+        @media (max-width: 1000px) {
+
+            .catalyst-events-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+
+            .catalyst-controls {
+                grid-template-columns: 1fr 1fr;
+            }
+
+
+            .catalyst-control:first-child {
+                grid-column: 1 / -1;
+            }
+        }
+
+
+        @media (max-width: 700px) {
+
+            .catalyst-nav-inner {
+                width: min(100% - 30px, 1400px);
+                min-height: 68px;
+            }
+
+
+            .catalyst-nav-links {
+                gap: 12px;
+            }
+
+
+            .catalyst-nav-links a:not(.catalyst-login) {
+                display: none;
+            }
+
+
+            .catalyst-events-hero,
+            .catalyst-controls,
+            .catalyst-events-section {
+                width: min(100% - 30px, 1400px);
+            }
+
+
+            .catalyst-events-hero {
+                padding: 65px 0 40px;
+            }
+
+
+            .catalyst-events-intro {
+                font-size: 17px;
+                margin-top: 30px;
+            }
+
+
+            .catalyst-controls {
+                grid-template-columns: 1fr;
+            }
+
+
+            .catalyst-control:first-child {
+                grid-column: auto;
+            }
+
+
+            .catalyst-events-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .catalyst-event-card {
+                min-height: 420px;
+            }
+        }
+    </style>
+</head>
+
+
+<body class="home-template has-mono-title has-sans-body">
+
+    <div class="catalyst-events-page">
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="catalyst-nav">
+
+            <div class="catalyst-nav-inner">
+
+
+                <a
+                    href="index.html"
+                    class="catalyst-logo"
+                >
+                    <span>CATALYST</span>
+                </a>
+
+
+                <div class="catalyst-nav-links">
+
+                    <a href="events.html">
+                        Events
+                    </a>
+
+                    <a href="my-events.html">
+                        My Events
+                    </a>
+
+                    <a href="clubs.html">
+                        Clubs
+                    </a>
+
+                    <a href="announcements.html">
+                        Announcements
+                    </a>
+
+                    <a
+                        href="login.html"
+                        class="catalyst-login"
+                    >
+                        Login
+                    </a>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+        <!-- HERO -->
+
+        <header class="catalyst-events-hero">
+
+            <p class="catalyst-eyebrow">
+                College Community / Discover / Participate
+            </p>
+
+
+            <h1 class="catalyst-events-title">
+                EVENTS
+            </h1>
+
+
+            <p class="catalyst-events-intro">
+                Find what's happening across campus — hackathons,
+                workshops, competitions, talks, fests and everything
+                worth showing up for.
+            </p>
+
+        </header>
+
+
+        <!-- FILTERS -->
+
+        <section class="catalyst-controls">
+
+            <input
+                id="searchInput"
+                class="catalyst-control"
+                type="search"
+                placeholder="SEARCH EVENTS..."
+                autocomplete="off"
+            >
+
+
+            <select
+                id="categoryFilter"
+                class="catalyst-control"
+            >
+                <option value="">
+                    ALL CATEGORIES
+                </option>
+            </select>
+
+
+            <select
+                id="statusFilter"
+                class="catalyst-control"
+            >
+                <option value="">
+                    ALL STATUS
+                </option>
+
+                <option value="COMING_SOON">
+                    COMING SOON
+                </option>
+
+                <option value="REGISTRATION_OPEN">
+                    REGISTRATION OPEN
+                </option>
+
+                <option value="REGISTRATION_CLOSED">
+                    REGISTRATION CLOSED
+                </option>
+
+                <option value="LIVE">
+                    LIVE
+                </option>
+
+                <option value="COMPLETED">
+                    COMPLETED
+                </option>
+
+            </select>
+
+        </section>
+
+
+        <!-- EVENTS -->
+
+        <main class="catalyst-events-section">
+
+            <div class="catalyst-section-heading">
+
+                <span>
+                    ALL EVENTS
+                </span>
+
+                <span
+                    id="eventCount"
+                    class="catalyst-event-count"
+                >
+                    LOADING...
+                </span>
+
+            </div>
+
+
+            <div
+                id="eventsGrid"
+                class="catalyst-events-grid"
+            >
+
+                <div class="catalyst-loading">
+                    Loading events...
+                </div>
+
+            </div>
+
+        </main>
+
+
+    </div>
+
+
+    <script src="assets/js/catalyst-nav.js"></script>
+    <script src="assets/js/catalyst-events.js"></script>
+</body>
+</html>

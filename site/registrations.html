@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Registrations — Catalyst</title>
+
+    <link
+        rel="stylesheet"
+        href="assets/built/screen.css"
+    >
+
+    <style>
+        .registrations-page {
+            min-height: 100vh;
+            background: #f7f7f5;
+            color: #111;
+        }
+
+        .registrations-nav {
+            border-bottom: 1px solid #ddd;
+            background: #fff;
+        }
+
+        .registrations-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .registrations-logo {
+            color: #111;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+
+        .registrations-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .registrations-nav-link {
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .registrations-nav-link:hover {
+            color: #111;
+        }
+
+        .registrations-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 24px 100px;
+        }
+
+        .registrations-eyebrow {
+            margin: 0 0 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #777;
+        }
+
+        .registrations-title {
+            margin: 0;
+            font-size: clamp(42px, 7vw, 80px);
+            line-height: 0.95;
+            letter-spacing: -0.06em;
+        }
+
+        .registrations-subtitle {
+            max-width: 650px;
+            margin: 20px 0 0;
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .registration-event-header {
+            margin-top: 55px;
+            padding: 24px 0;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .registration-event-title {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: -0.03em;
+        }
+
+        .registration-event-meta {
+            margin-top: 8px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .registration-count {
+            margin-top: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .registration-table-wrap {
+            margin-top: 24px;
+            overflow-x: auto;
+            background: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .registration-table {
+            width: 100%;
+            min-width: 850px;
+            border-collapse: collapse;
+        }
+
+        .registration-table th {
+            padding: 16px 18px;
+            text-align: left;
+            background: #f1f1ee;
+            border-bottom: 1px solid #ddd;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #666;
+        }
+
+        .registration-table td {
+            padding: 18px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+            vertical-align: top;
+        }
+
+        .registration-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .student-name {
+            font-weight: 700;
+        }
+
+        .student-email {
+            margin-top: 4px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .empty-state {
+            margin-top: 40px;
+            padding: 50px 30px;
+            background: #fff;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .empty-state h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .empty-state p {
+            margin: 12px 0 0;
+            color: #777;
+        }
+
+        .error-state {
+            margin-top: 50px;
+            padding: 40px;
+            border: 1px solid #ddd;
+            background: #fff;
+        }
+
+        .error-state h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .error-state p {
+            margin: 12px 0 0;
+            color: #666;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 18px;
+            background: #111;
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        @media (max-width: 700px) {
+            .registrations-container {
+                padding-top: 40px;
+            }
+
+            .registrations-nav-links {
+                gap: 12px;
+            }
+
+            .registrations-nav-link {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div
+        id="registrationsPage"
+        class="registrations-page"
+    ></div>
+
+
+    <script src="assets/js/catalyst-registrations.js"></script>
+
+</body>
+</html>

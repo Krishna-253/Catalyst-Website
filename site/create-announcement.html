@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Announcement — Catalyst</title>
+
+    <link rel="stylesheet" href="assets/built/screen.css">
+
+    <style>
+        body {
+            background: #f7f7f5;
+        }
+
+        .announcement-page {
+            max-width: 850px;
+            margin: 80px auto;
+            padding: 0 24px;
+        }
+
+        .announcement-header {
+            margin-bottom: 40px;
+        }
+
+        .announcement-header h1 {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .announcement-header p {
+            color: #666;
+            font-size: 18px;
+        }
+
+        .announcement-form {
+            background: white;
+            padding: 40px;
+            border: 1px solid #ddd;
+            border-radius: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            min-height: 220px;
+            resize: vertical;
+        }
+
+        .publish-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .publish-option input {
+            width: auto;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .submit-button {
+            border: none;
+            background: #111;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .submit-button:hover {
+            opacity: 0.85;
+        }
+
+        .cancel-button {
+            text-decoration: none;
+            color: #111;
+            padding: 14px 20px;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 14px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .message.error {
+            display: block;
+            background: #ffe8e8;
+            color: #a00000;
+        }
+
+        .message.success {
+            display: block;
+            background: #e8f7e8;
+            color: #176b17;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="announcement-page">
+
+        <div class="announcement-header">
+            <h1>Create Announcement</h1>
+            <p>Share an important update with your club community.</p>
+        </div>
+
+        <form id="announcementForm" class="announcement-form">
+
+            <div class="form-group">
+                <label for="club">Club</label>
+
+                <select id="club" name="clubId" required>
+                    <option value="">Loading clubs...</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="title">Announcement Title</label>
+
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="e.g. Registrations for Vibeathon are now open"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="content">Announcement</label>
+
+                <textarea
+                    id="content"
+                    name="content"
+                    placeholder="Write your announcement here..."
+                    required
+                ></textarea>
+            </div>
+
+            <div class="publish-option">
+                <input
+                    type="checkbox"
+                    id="published"
+                    name="published"
+                >
+
+                <label for="published">
+                    Publish immediately
+                </label>
+            </div>
+
+            <div class="form-actions">
+                <button
+                    type="submit"
+                    class="submit-button"
+                    id="submitButton"
+                >
+                    Create Announcement
+                </button>
+
+                <a
+                    href="organizer.html"
+                    class="cancel-button"
+                >
+                    Cancel
+                </a>
+            </div>
+
+            <div id="message" class="message"></div>
+
+        </form>
+
+    </main>
+
+    <script src="assets/js/catalyst-create-announcement.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Organizer Dashboard — Catalyst</title>
+
+    <link rel="stylesheet" href="assets/built/screen.css">
+
+    <style>
+        :root {
+            --black: #111111;
+            --white: #f7f7f2;
+            --muted: #707070;
+            --border: rgba(17, 17, 17, 0.18);
+            --accent: #d9ff00;
+        }
+
+        body {
+            margin: 0;
+            background: var(--white);
+            color: var(--black);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* NAV */
+
+        .org-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            border-bottom: 1px solid var(--black);
+            background: var(--white);
+        }
+
+        .org-nav-inner {
+            width: min(1400px, calc(100% - 48px));
+            min-height: 78px;
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .org-logo {
+            color: var(--black);
+            text-decoration: none;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 28px;
+            letter-spacing: -1.5px;
+        }
+
+        .org-nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .org-nav-link {
+            color: var(--black);
+            text-decoration: none;
+
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .org-nav-link:hover {
+            text-decoration: underline;
+        }
+
+        .org-user {
+            padding: 11px 15px;
+            border: 1px solid var(--black);
+
+            font-family: monospace;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* PAGE */
+
+        .org-container {
+            width: min(1400px, calc(100% - 48px));
+            margin: 0 auto;
+            padding: 70px 0 120px;
+        }
+
+        .org-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 40px;
+
+            padding-bottom: 35px;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .org-eyebrow {
+            margin: 0 0 15px;
+
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        .org-title {
+            margin: 0;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: clamp(55px, 8vw, 110px);
+            line-height: .82;
+            letter-spacing: -.07em;
+            text-transform: uppercase;
+        }
+
+        .org-create-button {
+            display: inline-block;
+
+            padding: 16px 22px;
+
+            border: 1px solid var(--black);
+            background: var(--black);
+            color: var(--white);
+
+            text-decoration: none;
+
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+
+            white-space: nowrap;
+        }
+
+        .org-create-button:hover {
+            background: var(--accent);
+            color: var(--black);
+        }
+
+        /* SUMMARY */
+
+        .org-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+
+            border-bottom: 1px solid var(--black);
+        }
+
+        .org-stat {
+            min-height: 150px;
+            padding: 25px 25px 25px 0;
+
+            border-right: 1px solid var(--border);
+        }
+
+        .org-stat:not(:first-child) {
+            padding-left: 25px;
+        }
+
+        .org-stat:last-child {
+            border-right: none;
+        }
+
+        .org-stat-label {
+            color: var(--muted);
+
+            font-family: monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .org-stat-number {
+            margin-top: 20px;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 50px;
+            line-height: 1;
+            letter-spacing: -.06em;
+        }
+
+        /* SECTIONS */
+
+        .org-section {
+            margin-top: 70px;
+        }
+
+        .org-section-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+
+            border-bottom: 1px solid var(--black);
+            padding-bottom: 13px;
+        }
+
+        .org-section-title {
+            margin: 0;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 27px;
+            letter-spacing: -.05em;
+            text-transform: uppercase;
+        }
+
+        .org-section-count {
+            color: var(--muted);
+
+            font-family: monospace;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        /* CLUBS */
+
+        .org-clubs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .org-club {
+            padding: 25px;
+
+            border: 1px solid var(--black);
+
+            min-height: 170px;
+        }
+
+        .org-club-name {
+            margin: 0 0 12px;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 25px;
+            line-height: 1;
+            letter-spacing: -.05em;
+            text-transform: uppercase;
+        }
+
+        .org-club-description {
+            margin: 0 0 25px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .org-club-meta {
+            display: flex;
+            gap: 20px;
+
+            font-family: monospace;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        /* EVENTS */
+
+        .org-events {
+            border-top: 1px solid var(--black);
+        }
+
+        .org-event {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 150px;
+
+            align-items: center;
+
+            min-height: 120px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .org-event-main {
+            padding: 20px 20px 20px 0;
+        }
+
+        .org-event-title {
+            margin: 0 0 8px;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: -.045em;
+            text-transform: uppercase;
+        }
+
+        .org-event-category {
+            color: var(--muted);
+
+            font-family: monospace;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        .org-event-info {
+            padding: 20px;
+
+            border-left: 1px solid var(--border);
+        }
+
+        .org-event-label {
+            margin-bottom: 7px;
+
+            color: var(--muted);
+
+            font-family: monospace;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .org-event-value {
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .org-event-status {
+            display: inline-block;
+
+            padding: 7px 9px;
+
+            font-family: monospace;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+
+            border: 1px solid var(--black);
+        }
+
+        .org-event-status.published {
+            background: var(--accent);
+        }
+
+        .org-event-status.pending {
+            background: #eeeeea;
+        }
+
+        .org-event-status.draft {
+            background: transparent;
+        }
+
+        .org-event-action {
+            padding-left: 20px;
+        }
+
+        .org-view-button {
+            display: inline-block;
+
+            padding: 11px 14px;
+
+            border: 1px solid var(--black);
+
+            color: var(--black);
+            text-decoration: none;
+
+            font-family: monospace;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .org-view-button:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        /* EMPTY */
+
+        .org-empty {
+            padding: 45px 25px;
+
+            border: 1px dashed var(--border);
+
+            color: var(--muted);
+
+            font-family: monospace;
+            font-size: 11px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        /* LOADING */
+
+        .org-loading {
+            min-height: 60vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-family: monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        /* ERROR */
+
+        .org-error {
+            padding: 45px;
+
+            border: 1px solid var(--black);
+
+            text-align: center;
+        }
+
+        .org-error-title {
+            margin: 0 0 12px;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 35px;
+            text-transform: uppercase;
+        }
+
+        .org-error-message {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-family: monospace;
+            font-size: 11px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+            .org-clubs {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .org-event {
+                grid-template-columns: 1.5fr 1fr 1fr;
+            }
+
+            .org-event-action {
+                grid-column: 1 / -1;
+
+                padding: 0 0 20px;
+            }
+        }
+
+        @media (max-width: 750px) {
+            .org-nav-inner,
+            .org-container {
+                width: calc(100% - 30px);
+            }
+
+            .org-header {
+                display: block;
+            }
+
+            .org-create-button {
+                margin-top: 30px;
+            }
+
+            .org-summary {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .org-stat:nth-child(2) {
+                border-right: none;
+            }
+
+            .org-stat:nth-child(3),
+            .org-stat:nth-child(4) {
+                border-top: 1px solid var(--border);
+            }
+
+            .org-clubs {
+                grid-template-columns: 1fr;
+            }
+
+            .org-event {
+                display: block;
+                padding: 20px 0;
+            }
+
+            .org-event-main {
+                padding-right: 0;
+            }
+
+            .org-event-info {
+                padding: 10px 0;
+                border-left: none;
+            }
+
+            .org-event-action {
+                padding: 10px 0 0;
+            }
+
+            .org-nav-link {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="organizerPage">
+
+        <div class="org-loading">
+            Loading organizer dashboard...
+        </div>
+
+    </div>
+
+    <script src="assets/js/catalyst-organizer.js"></script>
+
+</body>
+</html>

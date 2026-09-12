@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Event — Catalyst</title>
+
+    <link rel="stylesheet" href="assets/built/screen.css">
+
+    <style>
+        :root {
+            --black: #111111;
+            --white: #f7f7f2;
+            --muted: #707070;
+            --border: rgba(17, 17, 17, 0.18);
+            --accent: #d9ff00;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--white);
+            color: var(--black);
+        }
+
+        /* NAVIGATION */
+
+        .create-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            border-bottom: 1px solid var(--black);
+            background: var(--white);
+        }
+
+        .create-nav-inner {
+            width: min(1400px, calc(100% - 48px));
+            min-height: 78px;
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .create-logo {
+            color: var(--black);
+            text-decoration: none;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+        }
+
+        .create-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .create-nav-links a {
+            color: var(--black);
+            text-decoration: none;
+
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .create-nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* PAGE */
+
+        .create-container {
+            width: min(1100px, calc(100% - 48px));
+            margin: 0 auto;
+            padding: 70px 0 120px;
+        }
+
+        .create-header {
+            padding-bottom: 35px;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .create-eyebrow {
+            margin: 0 0 15px;
+
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        .create-title {
+            margin: 0;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: clamp(55px, 8vw, 105px);
+            line-height: .82;
+            letter-spacing: -.07em;
+            text-transform: uppercase;
+        }
+
+        .create-intro {
+            max-width: 700px;
+            margin: 30px 0 0;
+
+            color: var(--muted);
+
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        /* FORM */
+
+        .create-form {
+            margin-top: 45px;
+        }
+
+        .form-section {
+            padding: 35px 0;
+
+            border-top: 1px solid var(--black);
+        }
+
+        .form-section-title {
+            margin: 0 0 25px;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 28px;
+            letter-spacing: -.05em;
+            text-transform: uppercase;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .form-field {
+            min-width: 0;
+        }
+
+        .form-field.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+
+            font-family: monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .form-label span {
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+
+            padding: 15px;
+
+            border: 1px solid var(--black);
+            border-radius: 0;
+
+            background: transparent;
+            color: var(--black);
+
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        .form-textarea.large {
+            min-height: 190px;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: 2px solid var(--black);
+            outline-offset: 2px;
+        }
+
+        /* FILE INPUT */
+
+        .form-file {
+            width: 100%;
+
+            padding: 25px 15px;
+
+            border: 1px dashed var(--black);
+
+            background: transparent;
+
+            font-family: monospace;
+            font-size: 11px;
+        }
+
+        .form-help {
+            margin: 8px 0 0;
+
+            color: var(--muted);
+
+            font-family: monospace;
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+        /* SUBMIT */
+
+        .create-submit-area {
+            padding-top: 35px;
+
+            border-top: 1px solid var(--black);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .create-submit-note {
+            max-width: 500px;
+
+            color: var(--muted);
+
+            font-family: monospace;
+            font-size: 10px;
+            line-height: 1.6;
+        }
+
+        .create-submit {
+            min-width: 230px;
+
+            padding: 17px 25px;
+
+            border: 1px solid var(--black);
+            background: var(--black);
+            color: var(--white);
+
+            cursor: pointer;
+
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+        }
+
+        .create-submit:hover {
+            background: var(--accent);
+            color: var(--black);
+        }
+
+        .create-submit:disabled {
+            cursor: not-allowed;
+            opacity: .55;
+        }
+
+        /* MESSAGE */
+
+        .create-message {
+            display: none;
+
+            margin-bottom: 30px;
+            padding: 17px;
+
+            border: 1px solid var(--black);
+
+            font-family: monospace;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .create-message.visible {
+            display: block;
+        }
+
+        .create-message.success {
+            background: var(--accent);
+        }
+
+        .create-message.error {
+            background: #eeeeea;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 700px) {
+            .create-nav-inner,
+            .create-container {
+                width: calc(100% - 30px);
+            }
+
+            .create-nav-inner {
+                min-height: 68px;
+            }
+
+            .create-nav-links a:not(:first-child) {
+                display: none;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-field.full {
+                grid-column: auto;
+            }
+
+            .create-submit-area {
+                display: block;
+            }
+
+            .create-submit {
+                width: 100%;
+                margin-top: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="create-nav">
+
+        <div class="create-nav-inner">
+
+            <a
+                href="organizer.html"
+                class="create-logo"
+            >
+                CATALYST
+            </a>
+
+            <div class="create-nav-links">
+
+                <a href="organizer.html">
+                    Dashboard
+                </a>
+
+                <a href="events.html">
+                    Events
+                </a>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <main class="create-container">
+
+        <header class="create-header">
+
+            <p class="create-eyebrow">
+                Catalyst / Organizer
+            </p>
+
+            <h1 class="create-title">
+                CREATE<br>
+                EVENT
+            </h1>
+
+            <p class="create-intro">
+                Add an event to your club and submit it for approval.
+                Once approved, it will become visible to students
+                across the Catalyst community.
+            </p>
+
+        </header>
+
+
+        <form
+            id="createEventForm"
+            class="create-form"
+        >
+
+            <div
+                id="createMessage"
+                class="create-message"
+            ></div>
+
+
+            <!-- BASIC INFORMATION -->
+
+            <section class="form-section">
+
+                <h2 class="form-section-title">
+                    01 / Basic Information
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-field full">
+
+                        <label
+                            for="title"
+                            class="form-label"
+                        >
+                            Event Name
+                        </label>
+
+                        <input
+                            id="title"
+                            name="title"
+                            class="form-input"
+                            type="text"
+                            placeholder="e.g. AI Buildathon 2026"
+                            maxlength="200"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-field">
+
+                        <label
+                            for="category"
+                            class="form-label"
+                        >
+                            Category
+                        </label>
+
+                        <input
+                            id="category"
+                            name="category"
+                            class="form-input"
+                            type="text"
+                            placeholder="Hackathon, Workshop, Competition..."
+                            maxlength="100"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-field">
+
+                        <label
+                            for="clubId"
+                            class="form-label"
+                        >
+                            Organizing Club
+                        </label>
+
+                        <select
+                            id="clubId"
+                            name="clubId"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+                                Loading clubs...
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-field full">
+
+                        <label
+                            for="description"
+                            class="form-label"
+                        >
+                            Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            class="form-textarea large"
+                            placeholder="Tell students what this event is about..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- EVENT DETAILS -->
+
+            <section class="form-section">
+
+                <h2 class="form-section-title">
+                    02 / Event Details
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-field">
+
+                        <label
+                            for="venue"
+                            class="form-label"
+                        >
+                            Venue
+                            <span>(optional)</span>
+                        </label>
+
+                        <input
+                            id="venue"
+                            name="venue"
+                            class="form-input"
+                            type="text"
+                            placeholder="Main Auditorium"
+                            maxlength="300"
+                        >
+
+                    </div>
+
+
+                    <div class="form-field">
+
+                        <label
+                            for="capacity"
+                            class="form-label"
+                        >
+                            Capacity
+                            <span>(optional)</span>
+                        </label>
+
+                        <input
+                            id="capacity"
+                            name="capacity"
+                            class="form-input"
+                            type="number"
+                            min="1"
+                            placeholder="200"
+                        >
+
+                    </div>
+
+
+                    <div class="form-field full">
+
+                        <label
+                            for="eligibility"
+                            class="form-label"
+                        >
+                            Eligibility
+                            <span>(optional)</span>
+                        </label>
+
+                        <textarea
+                            id="eligibility"
+                            name="eligibility"
+                            class="form-textarea"
+                            placeholder="Who can participate?"
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-field full">
+
+                        <label
+                            for="rules"
+                            class="form-label"
+                        >
+                            Rules
+                            <span>(optional)</span>
+                        </label>
+
+                        <textarea
+                            id="rules"
+                            name="rules"
+                            class="form-textarea"
+                            placeholder="Event rules and participation guidelines..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-field">
+
+                        <label
+                            for="prizes"
+                            class="form-label"
+                        >
+                            Prizes
+                            <span>(optional)</span>
+                        </label>
+
+                        <textarea
+                            id="prizes"
+                            name="prizes"
+                            class="form-textarea"
+                            placeholder="Prizes, rewards or certificates..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-field">
+
+                        <label
+                            for="timeline"
+                            class="form-label"
+                        >
+                            Timeline
+                            <span>(optional)</span>
+                        </label>
+
+                        <textarea
+                            id="timeline"
+                            name="timeline"
+                            class="form-textarea"
+                            placeholder="Rounds, schedule, important milestones..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- DATES -->
+
+            <section class="form-section">
+
+                <h2 class="form-section-title">
+                    03 / Dates & Registration
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-field">
+
+                        <label
+                            for="registrationStart"
+                            class="form-label"
+                        >
+                            Registration Opens
+                        </label>
+
+                        <input
+                            id="registrationStart"
+                            name="registrationStart"
+                            class="form-input"
+                            type="datetime-local"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-field">
+
+                        <label
+                            for="registrationEnd"
+                            class="form-label"
+                        >
+                            Registration Closes
+                        </label>
+
+                        <input
+                            id="registrationEnd"
+                            name="registrationEnd"
+                            class="form-input"
+                            type="datetime-local"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-field">
+
+                        <label
+                            for="eventStart"
+                            class="form-label"
+                        >
+                            Event Starts
+                        </label>
+
+                        <input
+                            id="eventStart"
+                            name="eventStart"
+                            class="form-input"
+                            type="datetime-local"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-field">
+
+                        <label
+                            for="eventEnd"
+                            class="form-label"
+                        >
+                            Event Ends
+                        </label>
+
+                        <input
+                            id="eventEnd"
+                            name="eventEnd"
+                            class="form-input"
+                            type="datetime-local"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- MEDIA -->
+
+            <section class="form-section">
+
+                <h2 class="form-section-title">
+                    04 / Media
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-field full">
+
+                        <label
+                            for="bannerUrl"
+                            class="form-label"
+                        >
+                            Banner Image URL
+                            <span>(optional for now)</span>
+                        </label>
+
+                        <input
+                            id="bannerUrl"
+                            name="bannerUrl"
+                            class="form-input"
+                            type="url"
+                            placeholder="https://..."
+                        >
+
+                        <p class="form-help">
+                            File uploads will be added later.
+                            For now, you can use a publicly accessible image URL.
+                        </p>
+
+                    </div>
+
+
+                    <div class="form-field full">
+
+                        <label
+                            for="brochureUrl"
+                            class="form-label"
+                        >
+                            Brochure URL
+                            <span>(optional for now)</span>
+                        </label>
+
+                        <input
+                            id="brochureUrl"
+                            name="brochureUrl"
+                            class="form-input"
+                            type="url"
+                            placeholder="https://..."
+                        >
+
+                        <p class="form-help">
+                            PDF/file uploads will be connected once we add
+                            proper file storage.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- SUBMIT -->
+
+            <div class="create-submit-area">
+
+                <p class="create-submit-note">
+                    Your event will be submitted as
+                    <strong>PENDING APPROVAL</strong>.
+                    It will not become publicly visible until it has
+                    been approved.
+                </p>
+
+
+                <button
+                    id="createSubmit"
+                    class="create-submit"
+                    type="submit"
+                >
+                    SUBMIT EVENT →
+                </button>
+
+            </div>
+
+        </form>
+
+    </main>
+
+
+    <script src="assets/js/catalyst-create-event.js"></script>
+
+</body>
+</html>

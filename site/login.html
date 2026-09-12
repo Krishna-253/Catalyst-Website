@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Login — Catalyst</title>
+
+    <link rel="stylesheet" href="assets/built/screen.css">
+
+    <style>
+        :root {
+            --black: #111111;
+            --white: #f7f7f2;
+            --muted: #707070;
+            --border: rgba(17, 17, 17, 0.18);
+            --accent: #d9ff00;
+        }
+
+        body {
+            margin: 0;
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .login-page {
+            min-height: 100vh;
+        }
+
+        /* NAVIGATION */
+
+        .login-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            border-bottom: 1px solid var(--border);
+            background: var(--white);
+        }
+
+        .login-nav-inner {
+            width: min(1400px, calc(100% - 48px));
+            min-height: 78px;
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .login-logo {
+            color: var(--black);
+            text-decoration: none;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+        }
+
+        .login-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .login-nav-links a {
+            color: var(--black);
+            text-decoration: none;
+
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .login-nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* MAIN */
+
+        .login-container {
+            width: min(1400px, calc(100% - 48px));
+            margin: 0 auto;
+            padding: 90px 0 120px;
+        }
+
+        .login-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 80px;
+
+            border-top: 1px solid var(--black);
+            border-bottom: 1px solid var(--black);
+        }
+
+        /* LEFT */
+
+        .login-intro {
+            padding: 55px 40px 55px 0;
+        }
+
+        .login-eyebrow {
+            margin: 0 0 20px;
+
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        .login-title {
+            margin: 0;
+
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: clamp(65px, 9vw, 125px);
+            line-height: .82;
+            letter-spacing: -.07em;
+            text-transform: uppercase;
+        }
+
+        .login-description {
+            max-width: 600px;
+            margin: 40px 0 0;
+
+            font-size: 19px;
+            line-height: 1.5;
+        }
+
+        /* FORM */
+
+        .login-form-wrapper {
+            padding: 55px 0 55px 40px;
+            border-left: 1px solid var(--border);
+        }
+
+        .login-form {
+            max-width: 500px;
+        }
+
+        .login-field {
+            margin-bottom: 25px;
+        }
+
+        .login-label {
+            display: block;
+            margin-bottom: 9px;
+
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .login-input {
+            width: 100%;
+            box-sizing: border-box;
+
+            padding: 16px 15px;
+
+            border: 1px solid var(--black);
+            border-radius: 0;
+
+            background: transparent;
+            color: var(--black);
+
+            font-family: inherit;
+            font-size: 15px;
+        }
+
+        .login-input:focus {
+            outline: 2px solid var(--black);
+            outline-offset: 2px;
+        }
+
+        .login-button {
+            width: 100%;
+
+            margin-top: 10px;
+            padding: 17px 20px;
+
+            border: 1px solid var(--black);
+            background: var(--black);
+            color: var(--white);
+
+            cursor: pointer;
+
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .login-button:hover {
+            background: transparent;
+            color: var(--black);
+        }
+
+        .login-button:disabled {
+            cursor: not-allowed;
+            opacity: .55;
+        }
+
+        /* MESSAGE */
+
+        .login-message {
+            display: none;
+
+            margin-bottom: 25px;
+            padding: 15px;
+
+            border: 1px solid var(--black);
+
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .login-message.visible {
+            display: block;
+        }
+
+        .login-message.success {
+            background: var(--accent);
+        }
+
+        .login-message.error {
+            background: #eeeeea;
+        }
+
+        /* BOTTOM */
+
+        .login-register {
+            margin-top: 30px;
+
+            color: var(--muted);
+
+            font-family: monospace;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .login-register a {
+            color: var(--black);
+            font-weight: 700;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+            .login-layout {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .login-intro {
+                padding-right: 0;
+                padding-bottom: 45px;
+            }
+
+            .login-form-wrapper {
+                padding-left: 0;
+                padding-top: 45px;
+                border-left: none;
+                border-top: 1px solid var(--border);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .login-nav-inner,
+            .login-container {
+                width: calc(100% - 30px);
+            }
+
+            .login-nav-inner {
+                min-height: 68px;
+            }
+
+            .login-nav-links a:not(:first-child) {
+                display: none;
+            }
+
+            .login-container {
+                padding-top: 55px;
+            }
+
+            .login-title {
+                font-size: 65px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-page">
+
+        <!-- NAVIGATION -->
+
+        <nav class="login-nav">
+
+            <div class="login-nav-inner">
+
+                <a
+                    href="index.html"
+                    class="login-logo"
+                >
+                    CATALYST
+                </a>
+
+                <div class="login-nav-links">
+
+                    <a href="events.html">
+                        Events
+                    </a>
+
+                    <a href="clubs.html">
+                        Clubs
+                    </a>
+
+                    <a href="index.html">
+                        Home
+                    </a>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+        <!-- LOGIN -->
+
+        <main class="login-container">
+
+            <section class="login-layout">
+
+                <div class="login-intro">
+
+                    <p class="login-eyebrow">
+                        Catalyst / College Community
+                    </p>
+
+                    <h1 class="login-title">
+                        WELCOME<br>
+                        BACK.
+                    </h1>
+
+                    <p class="login-description">
+                        Log in to register for events, keep track
+                        of your participation and stay connected
+                        with what's happening across campus.
+                    </p>
+
+                </div>
+
+
+                <div class="login-form-wrapper">
+
+                    <form
+                        id="loginForm"
+                        class="login-form"
+                    >
+
+                        <div
+                            id="loginMessage"
+                            class="login-message"
+                        ></div>
+
+
+                        <div class="login-field">
+
+                            <label
+                                for="email"
+                                class="login-label"
+                            >
+                                College Email
+                            </label>
+
+                            <input
+                                id="email"
+                                name="email"
+                                class="login-input"
+                                type="email"
+                                placeholder="you@college.edu"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="login-field">
+
+                            <label
+                                for="password"
+                                class="login-label"
+                            >
+                                Password
+                            </label>
+
+                            <input
+                                id="password"
+                                name="password"
+                                class="login-input"
+                                type="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                        </div>
+
+
+                        <button
+                            id="loginButton"
+                            class="login-button"
+                            type="submit"
+                        >
+                            LOGIN →
+                        </button>
+
+
+                        <p class="login-register">
+                            Don't have an account yet?
+                            <a href="register.html">
+                                Create one
+                            </a>
+                        </p>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="assets/js/catalyst-login.js"></script>
+
+</body>
+</html>
